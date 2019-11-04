@@ -3,12 +3,6 @@
   "version": "0.0.0",
   "main": "dist/index.ts",
   "types": "dist/index.d.ts",
-  "maintainers": [
-    {
-      "email": "alex.semenov.web@mail.ru",
-      "name": "Dmitry Serdukov"
-    }
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dimaserd/Croco-AppCore-Js.git"
@@ -46,6 +40,7 @@
     "conventional-changelog": "^3.1.12",
     "conventional-changelog-cli": "^2.0.25",
     "cpy": "^7.3.0",
+    "cpy-cli": "^2.0.0",
     "np": "^3.1.0",
     "rimraf": "^3.0.0",
     "ts-helpers": "^1.1.2",
