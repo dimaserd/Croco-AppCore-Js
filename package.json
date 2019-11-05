@@ -33,11 +33,9 @@
     "changelog:commit": "git commit -m \"Updated CHANGELOG.md\"",
     "test": "echo",
     "version": "npx conventional-changelog -i CHANGELOG.md -s -r && npm run build && npm run copy:assets && npm run changelog:add && npm run changelog:commit",
-    "postversion": "git push && git push --tags",
     "release": "npx np --contents=dist --any-branch"
   },
   "devDependencies": {
-    "conventional-changelog": "^3.1.12",
     "conventional-changelog-cli": "^2.0.25",
     "cpy": "^7.3.0",
     "cpy-cli": "^2.0.0",
