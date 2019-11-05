@@ -32,7 +32,7 @@
     "changelog:add": "git add --force CHANGELOG.md package.json",
     "changelog:commit": "git commit -m \"Updated CHANGELOG.md\"",
     "test": "echo",
-    "version": "npx conventional-changelog -i CHANGELOG.md -s -r && npm run build && npm run copy:assets && npm run changelog:add && npm run changelog:commit",
+    "version": "npx conventional-changelog -i CHANGELOG.md -s -r && npm run build && npm run copy:assets",
     "release": "npx np --contents=dist --any-branch"
   },
   "devDependencies": {
