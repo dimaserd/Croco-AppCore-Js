@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src\\Core"
+    "\\src",
+    "\\src\\Core",
+    "\\src\\Core\\Extensions"
   ],
-  "SelectedNode": "\\package-lock.json",
   "PreviewInSolutionExplorer": false
 }
