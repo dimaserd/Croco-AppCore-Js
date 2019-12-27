@@ -2,24 +2,29 @@
 
 export interface IFormDataHelper {
 
-    FillData(object: Object): void;
+    /*
+    * Константа для обозначения null значений и вычленения их из строки
+    * */
+    readonly NullValue: string;
+
+    /*
+    * Константа для имени аттрибута содержащего тип данных
+    * */
+    readonly DataTypeAttributeName: string;
 
     /**
-     * Собрать данные для свойств объекта с Html страницы
+     * Заполнить данные на input элементах Html страницы для свойств объекта
      * @param object   объект, свойства которого нужно заполнить
      * @param prefix   префикс стоящий перед свойствами объекта
      */
     FillDataByPrefix(object: Object, prefix: string): void;
-
-
-    CollectData(object: object): object;
 
     /**
      *   Собрать данные с формы по префиксу
      * @param object  объект, свойства которого нужно собрать с формы
      * @param prefix  префикс для свойств объекта
      */
-    CollectDataByPrefix(object: object, prefix: string): object;
+    CollectDataByPrefix(object: object, prefix: string): void;
 
     /**
      * Собрать данные с сопоставлением типов

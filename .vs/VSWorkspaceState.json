@@ -1,9 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\src",
     "\\src\\Core",
-    "\\src\\Core\\Implementations"
+    "\\src\\Core\\Extensions",
+    "\\src\\Core\\Implementations",
+    "\\src\\Core\\Models",
+    "\\src\\Core\\Models\\Documentation"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\src\\Core\\Abstractions",
   "PreviewInSolutionExplorer": false
 }

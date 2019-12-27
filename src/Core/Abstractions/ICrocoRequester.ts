@@ -1,11 +1,29 @@
 ﻿export interface ICrocoRequester {
-    DeleteCompletedRequest(link: string): void;
-    ParseDate(date: string): string;
-    GetCombinedData(prefix: string, obj: Object): Object;
-    GetParams(obj: Object): string;
-    SendPostRequestWithAnimation(link: string, data: Object, onSuccessFunc: Function, onErrorFunc: Function): void;
-    UploadFilesToServer(inputId: string, onSuccessFunc: Function, onErrorFunc: Function);
-    IsRequestGoing(link: string): boolean;
-    SendAjaxGet(link: string, data: Object, onSuccessFunc: Function, onErrorFunc: Function);
-    SendAjaxPost(link: string, data: Object, onSuccessFunc: Function, onErrorFunc: Function, animations: boolean);
+
+    /**
+     * Загрузить файл на сервер
+     * @param inputId идентификатор инпута, в котором лежит файл
+     * @param link  ссылка на метод апи
+     * @param onSuccessFunc  обработчик успешного ответа от сервера
+     * @param onErrorFunc    обработчик неуспешного ответа от сервера
+     */
+    UploadFilesToServer<TObject>(inputId: string, link: string, onSuccessFunc: (x: TObject) => any, onErrorFunc: Function): void;
+
+    /**
+     * Сделать GET запрос на сервер
+     * @param link  адрес, по которому будет совершен запрос
+     * @param data  данные, котороые отправятся на сервер
+     * @param onSuccessFunc обработчик успешного ответа от сервера
+     * @param onErrorFunc   обработчик неуспешного ответа от сервера
+     */
+    Get<TObject>(link: string, data: Object, onSuccessFunc: (x: TObject) => void, onErrorFunc: Function): void;
+
+    /**
+     * Сделать POST запрос на сервер
+     * @param link  адрес, по которому будет совершен запрос
+     * @param data  данные, котороые отправятся на сервер
+     * @param onSuccessFunc обработчик успешного ответа от сервера
+     * @param onErrorFunc   обработчик неуспешного ответа от сервера
+     */
+    Post<TObject>(link: string, data: Object, onSuccessFunc: (x: TObject) => void, onErrorFunc: Function): void;
 }

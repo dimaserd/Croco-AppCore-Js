@@ -4,14 +4,16 @@ import { CrocoTypeDescription } from '../Models';
 
 export class FormDataHelper implements IFormDataHelper {
 
-    /**
+    /*
     * Константа для обозначения null значений и вычленения их из строки
     * */
     public readonly NullValue: string = "VALUE_NULL";
 
-    FillData(object: Object): void {
-        this.FillDataByPrefix(object, "");
-    }
+    /*
+    * Константа для имени аттрибута содержащего тип данных
+    * */
+    public readonly DataTypeAttributeName: string = "data-type";
+
 
     FillDataByPrefix(object: Object, prefix: string): void {
 
@@ -68,49 +70,52 @@ export class FormDataHelper implements IFormDataHelper {
 
     }
 
-
-    CollectData(object: object): object {
-        return this.CollectDataByPrefix(object, "");
-    }
-
-    CollectDataByPrefix(object: object, prefix: string): object {
-
-        console.log("FormDataHelper.CollectDataByPrefix", object, prefix);
+    CollectDataByPrefix(object: object, prefix: string): void {
 
         for (let index in object) {
             if (object.hasOwnProperty(index)) {
 
                 const name = prefix + index;
 
-                const element = document.getElementsByName(name)[0] as any;
+                const element = document.getElementsByName(name)[0] as HTMLElement;
 
                 if (element == null) {
-                    alert(`Element with name ${name} not found check the source code`);
-                    continue;
+                    alert(`Элемент не найден по указанному имени ${name}`);
+                    return;
                 }
 
-                if (element.type === "select-multiple") {
-
-                    object[index] = Array.apply(null, element.options)
-                        .filter(option => option.selected)
-                        .map(option => option.value);
-
-                    continue;
-                }
-
-                if (element.type === "radio") {
-                    var value = document.querySelector(`input[name="${name}"]:checked`) != null
-                    if (value)
-                        (object[index] = document.querySelector(`input[name="${name}"]:checked`) as HTMLInputElement).value;
-                    continue;
-                }
-
-
-                //Чекбоксы нужно проверять отдельно потому что у них свойство не value а почему-то checked
-                object[index] = element.type === "checkbox" ? element.checked : element.value;
+                let rawValue = this.GetRawValueFromElement(element);
+                object[index] = this.ValueMapper(rawValue, element.getAttribute(this.DataTypeAttributeName));
             }
         }
-        return object;
+    }
+
+    private GetRawValueFromElement(htmlElement: any): string {
+
+        if (htmlElement.type === "select-multiple") {
+
+            return Array.apply(null, (htmlElement as HTMLSelectElement).options)
+                .filter(option => option.selected)
+                .map(option => option.value);
+        }
+
+        if (htmlElement.type === "radio") {
+
+            var flag = document.querySelector(`input[name="${name}"]:checked`) != null
+
+            if (flag) {
+                let elem = document.querySelector(`input[name="${name}"]:checked`) as HTMLInputElement;
+
+                console.log("FormDataHelper.Radio", elem);
+
+                return elem.value;
+            }
+
+            return null;
+        }
+
+        //Чекбоксы нужно проверять отдельно потому что у них свойство не value а почему-то checked
+        return htmlElement.type === "checkbox" ? htmlElement.checked : htmlElement.value;
     }
 
 
@@ -123,7 +128,9 @@ export class FormDataHelper implements IFormDataHelper {
 
         this.CheckData(typeDescription);
 
-        const initData = this.CollectDataByPrefix(this.BuildObject(typeDescription), modelPrefix);
+        const initData = this.BuildObject(typeDescription);
+
+        this.CollectDataByPrefix(initData, modelPrefix);
 
         for (let i = 0; i < typeDescription.Properties.length; i++) {
 
@@ -131,18 +138,30 @@ export class FormDataHelper implements IFormDataHelper {
 
             let initValue = this.GetInitValue(initData[prop.PropertyName]);
 
-            switch (prop.TypeName) {
-                case CSharpType.Decimal.toString():
-
-                    initData[prop.PropertyName] = (initValue !== null) ? Number((initValue).replace(/,/g, '.')) : null;
-                    break;
-                case CSharpType.Boolean.toString():
-                    initData[prop.PropertyName] = (initValue !== null) ? initValue.toLowerCase() === "true" : null;
-                    break;
-            }
+            initData[prop.PropertyName] = this.ValueMapper(initValue, prop.TypeName);
         }
 
         return initData;
+    }
+
+    private ValueMapper(rawValue: string, dataType: string): string | number | boolean | Date {
+
+        console.log("FormDataHelper.ValueMapper", rawValue, dataType);
+
+        if (rawValue === this.NullValue) {
+            return null;
+        }
+
+        switch (dataType) {
+            case CSharpType.DateTime.toString():
+                return new Date(rawValue);
+            case CSharpType.Decimal.toString():
+                return (rawValue !== null) ? Number((rawValue).replace(/,/g, '.')) : null;
+            case CSharpType.Boolean.toString():
+                return (rawValue !== null) ? rawValue.toLowerCase() === "true" : null;
+        }
+
+        return rawValue;
     }
 
     private GetInitValue(propValue: any): string {
