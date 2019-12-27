@@ -1,13 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src",
-    "\\src\\Core",
-    "\\src\\Core\\Extensions",
-    "\\src\\Core\\Implementations",
-    "\\src\\Core\\Models",
-    "\\src\\Core\\Models\\Documentation"
+    "\\src\\Core"
   ],
-  "SelectedNode": "\\src\\Core\\Abstractions",
+  "SelectedNode": "\\package-lock.json",
   "PreviewInSolutionExplorer": false
 }
