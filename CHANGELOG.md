@@ -1,3 +1,10 @@
+## <small>0.0.6 (2019-12-27)</small>
+
+* Fixes ([fe6351f](https://github.com/dimaserd/Croco-AppCore-Js/commit/fe6351f))
+* Updated CHANGELOG.md ([01cd7a7](https://github.com/dimaserd/Croco-AppCore-Js/commit/01cd7a7))
+
+
+
 ## <small>0.0.5 (2019-12-27)</small>
 
 * Fixes ([9346f74](https://github.com/dimaserd/Croco-AppCore-Js/commit/9346f74))
